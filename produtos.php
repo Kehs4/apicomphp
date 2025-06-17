@@ -12,6 +12,19 @@
     <link rel="stylesheet" href="produtos.css">
 </head>
 <body>
+    
+<div id="modalProducts-main" class="modal-products">
+        <div id="modalProducts" class="modal-products-content">
+            <div class="modal-close-btn">
+                <button class="btn-products-close" id="btn-products-close">&times;</button>
+            </div>    
+            
+            <h1 id="productName" class="text-product"></h1>
+            <p id="productInfo"></p>
+            
+        </div>
+    </div>
+
     <div class="header">
         <h1>API de Produtos</h1>
         <nav>
@@ -20,7 +33,7 @@
             <a href="sobre.html">Sobre</a>
         </nav>
     </div>
-    
+
     <!-- Seção de pesquisa -->
     <section class="pesquisa">
         <h2>Pesquisar Produto por ID</h2>
@@ -75,6 +88,7 @@
                     <th>Valor</th>
                     <th>Unidade</th>
                     <th>Tipo Aplicação</th>
+                    <th class="th-info">Informações</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -114,6 +128,8 @@
         <pre id="resultadoCadastro"></pre>
     </section>
 
+    
+
 <script>
 const apiUrl = 'http://localhost:8000/items.php';
 
@@ -145,6 +161,7 @@ function listarProdutos() {
                     <td>R$${produto.valor}</td>
                     <td>${produto.unidade}</td>
                     <td>${produto.tipo_aplicacao}</td>
+                    <td><button class="btn-product-details" onclick="modalProducts()">Detalhes</button></td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -173,6 +190,40 @@ function cadastrarProduto(event) {
         listarProdutos();
     });
 }
+
+function modalProducts() {
+    id = event.target.closest('tr').querySelector('td').textContent;
+    fetch(`${apiUrl}?id=${id}`, {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify()
+    })
+    .then(r => r.json())
+    .then(data => {
+        document.getElementById('productName').textContent = data.dados.nome || 'Produto';
+        document.getElementById('productInfo').innerHTML = `
+            <p><strong>ID:</strong> ${data.dados.id || 'N/A'}</p>
+            <p><strong>Descrição:</strong> ${data.dados.descricao || 'N/A'}</p>
+            <p><strong>Valor:</strong> R$${data.dados.valor || '0.00'}</p>
+            <p><strong>Unidade:</strong> ${data.dados.unidade || 'N/A'}</p>
+            <p><strong>Tipo de Aplicação:</strong> ${data.dados.tipo_aplicacao || 'N/A'}</p>
+        `;
+    })
+
+    const modal = document.getElementById('modalProducts-main');
+    modal.style.display = 'block';
+
+    
+   const close = document.getElementById('btn-products-close');
+    
+    close.addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
+
+
+
+}
+
 
 // Carrega a lista ao abrir a página
 listarProdutos();

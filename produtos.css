@@ -143,12 +143,71 @@ table {
     background-color: #f0f0f0;
     margin-top: 5px;
 }
+#modalProducts-main {
+    position: fixed;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: #00000033;
+    z-index: 1;
+}
+
+.modal-products-content {
+    margin-top: 130px;
+    background-color: white;
+    width: 500px;
+    height: 300px;
+    border: 2px solid #555555;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.btn-product-details {
+    cursor: pointer;
+}
+
+.modal-close-btn {
+    display: flex;
+    justify-content: end;
+}
+
+.btn-products-close {
+    margin-right: 5px;
+    justify-content: end;
+    align-items: end;
+    margin-top: 5px;
+}
+
+.text-product {
+    text-align: center;
+    font-size: 24px;
+    color: #000000;
+}
+
+
+#productInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 5px;
+    font-size: 15px;
+    margin-left: 10px;
+}
 
 th {
     background-color: #000000;
     color: #ffffff;
     padding: 10px;
     text-align: left;
+}
+
+.th-info {
+    width: 40px;
 }
 
 td {
@@ -159,6 +218,7 @@ td {
 tr {
     transition: background-color 0.2s;
     background-color: #ffffff;
+    
 }
 
 tr:hover {
